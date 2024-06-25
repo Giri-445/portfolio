@@ -98,7 +98,28 @@
 		offset: "90%"
 	
 	});	
-
+	document.addEventListener('DOMContentLoaded', function() {
+		const skillBars = document.querySelectorAll('.skill-bars li');
+	
+		function checkScroll() {
+			skillBars.forEach(skillBar => {
+				if (isPartiallyVisible(skillBar)) {
+					skillBar.classList.add('in-view');
+				}
+			});
+		}
+	
+		function isPartiallyVisible(el) {
+			const rect = el.getBoundingClientRect();
+			const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+			const vertInView = (rect.top <= windowHeight) && ((rect.top + rect.height) >= 0);
+			return vertInView;
+		}
+	
+		window.addEventListener('scroll', checkScroll);
+		checkScroll(); // Check initially in case bars are already in view on page load
+	});
+	
 
 	/*---------------------------------------------------- */
 	/*	Masonry
@@ -215,8 +236,6 @@
   	/*---------------------------------------------------- */
 	/*	contact form
 	------------------------------------------------------ */
-
-	/* local validation */
 	$('#contactForm').validate({
 
 		/* submit via ajax */
@@ -263,8 +282,6 @@
   		}
 
 	});
-
-
  	/*----------------------------------------------------- */
   	/* Back to top
    ------------------------------------------------------- */ 
